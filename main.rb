@@ -1,3 +1,4 @@
-#! /usr/bin/env ruby
+#! /bin/sh
 
-require_relative 'test_events_main'
+./test_events_main.rb
+./sinatra_main.rb
