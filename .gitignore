@@ -1,1 +1,3 @@
 /.idea
+/thirdsource/
+!/thirdsource/jhgsxx/projectdata/partyserver.db
