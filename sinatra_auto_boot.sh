@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          hsiao
 # Required-Start:    $remote_fs $syslog $network

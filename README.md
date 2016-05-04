@@ -30,10 +30,11 @@ sudo service sinatraboot start/stop/restart
 相关文件：sinatra_auto_boot_install.sh(负责安装sinatraboot服务)
 ```
 
-## active_record_main.rb
+## active_record_main
 active_record 测试程序
-+ 执行: `./active_record_main.rb`
++ 执行: `./active_record_main.sh`
 ```shell
-主程序:    active_record_main.rb
-相关文件:  thirdsource/jhgsxx/projectdata/partyserver.db
+主程序:    active_record_main.sh
+相关文件:  active_record_main.rb
+          thirdsource/jhgsxx/projectdata/partyserver.db
 ```
