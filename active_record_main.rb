@@ -4,14 +4,14 @@ require 'active_record'
 
 
 lambda {
-  puts "Put your db name(default is party):"
+  puts "Enter current db name(default is party):"
   db_name = gets.chomp
   db_name = 'party' if db_name.empty?
 
   table_names = []
   ActiveRecord::Base.class_eval do
     establish_connection :adapter => "sqlite3",
-                         :database => "thirdsource/jhgsxx/projectdata/#{db_name}server.db"
+                         :database => "thirdresource/jhgsxx/projectdata/#{db_name}server.db"
     self.pluralize_table_names = false
     table_names = connection.data_sources
   end
