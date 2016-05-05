@@ -23,6 +23,7 @@ lambda {
     temp = Class.new(ActiveRecord::Base) do
       self.table_name = table_name
       self.primary_key = :id
+      validates_uniqueness_of :id
     end
     eval "#{table_name.gsub(/^(?:dst|tbl)/, '')} = temp"
   end
