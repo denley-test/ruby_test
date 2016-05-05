@@ -25,6 +25,6 @@ lambda {
       self.primary_key = :id
       validates_uniqueness_of :id
     end
-    eval "#{table_name.gsub(/^(?:dst|tbl)/, '')} = temp"
+    eval "#{table_name.gsub(/^(?:dst|tbl)/, '').classify} = temp"
   end
 }.call
