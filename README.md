@@ -38,3 +38,11 @@ active_record 测试程序
 相关文件:  active_record_main.rb
           thirdsource/jhgsxx/projectdata/partyserver.db
 ```
+
+## eager_load_main
+active_support/auto_load 测试程序
++ 执行: `./eager_load_main.rb`
+```shell
+主程序:    eager_load_main.rb
+相关文件:  my_class.rb my_cache.rb
+```
