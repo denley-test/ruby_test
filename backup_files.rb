@@ -16,10 +16,20 @@ def execute_backup(condition, action, source_path, target_path)
 
   def backup_files(action, source_files, target_files)
     Hash[*source_files.zip(target_files).flatten].each_pair do|source_file, target_file|
-      next if File.exist? target_file
-      puts " #{action} #{source_file} ..."
+      if File.exist? target_file
+        source_size, target_size = File.size(source_file), File.size(target_file)
+        if source_size == target_size
+          puts "  WARNING, existed #{source_file}, ignore"
+          next
+        else
+          puts "  WARNING, existed #{source_file}, but #{source_size} > #{target_size}?, override"
+          File.delete(target_file)
+        end
+      else
+        puts "  #{action} #{source_file} ..."
+      end
       target_path = File.dirname(target_file)
-      FileUtils.makedirs(target_path)
+      FileUtils.makedirs(target_path) unless File.exist? target_path
       FileUtils.send(action, source_file, target_file)
     end
   end
@@ -56,7 +66,8 @@ def get_params(options)
 end
 
 lambda {
-	condition, action, source_path, target_path = get_params("condition":"PartyServer.db$", "action":"copy", "source path":".", "target path":"./tmp")
+	name_defaults = {"condition":"PartyServer.db$", "action":"copy", "source path":".", "target path":"./tmp" }
+  condition, action, source_path, target_path = get_params(name_defaults)
   execute_backup(condition, action.to_s, source_path, target_path)
   puts "Finished!"
   system("pause")
