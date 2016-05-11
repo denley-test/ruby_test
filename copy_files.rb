@@ -3,16 +3,15 @@
 require 'fileutils'
 
 lambda {
-  def traverse(condition, path, ignore_path = [])
-    result = []
+  source_files = []
+  define_method :traverse do |condition, path, ignore_path=%w(. ..)|
     if File.directory?(path)
       Dir.foreach(path) do | name |
-        result.concat traverse(condition, [path, name].join('/'), ignore_path) unless ignore_path.include? name
+        traverse(condition, [path, name].join('/'), ignore_path) unless ignore_path.include? name
       end
     else
-      result << path if condition =~ File.basename(path)
+      source_files << path if condition =~ File.basename(path)
     end
-    return result
   end
 
   def copy_files(source_files, target_files)
@@ -29,7 +28,7 @@ lambda {
   source_path ||= '.'
   target_path ||= './tmp'
 
-  source_files = traverse(Regexp.new(condition, Regexp::IGNORECASE), source_path, %w(.git . .. tmp))
+  traverse(Regexp.new(condition, Regexp::IGNORECASE), source_path, %w(. .. .git tmp))
   target_files = source_files.map {|file| file.sub(source_path, target_path)}
 
   copy_files(source_files, target_files)
