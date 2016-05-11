@@ -1,6 +1,7 @@
 #! /usr/bin/env ruby
 
 require 'fileutils'
+require_relative 'get_params'
 
 def execute_backup(condition, action, source_path, target_path)
   source_files = []
@@ -38,31 +39,6 @@ def execute_backup(condition, action, source_path, target_path)
   target_files = source_files.map {|file| file.sub(source_path, target_path)}
 
   backup_files(action, source_files, target_files)
-end
-
-def get_params(options)
-	def input_value(name, default)
-		print "Enter #{name}(default is #{default}):"
-		result = gets.chomp
-		result = default if result.empty?
-		result
-	end
-	
-	def tranfer_value(index, default)
-		ARGV.length > index ? ARGV[index] : default
-	end
-	
-	if ARGV.empty?
-		function, first_params = :input_value, options.keys
-	else
-		function, first_params = :tranfer_value, (0...options.size).to_a
-	end
-	
-	result = []
-	options.values.each_with_index do |default, index|
-		result << send(function, first_params[index], default)
-	end
-	return result
 end
 
 lambda {
