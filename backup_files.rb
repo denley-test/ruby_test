@@ -48,14 +48,16 @@ def get_params(options)
 		function, first_params = :tranfer_value, (0...options.size).to_a
 	end
 	
+	result = []
 	options.values.each_with_index do |default, index|
-		send function, first_params[index], default
+		result << send(function, first_params[index], default)
 	end
+	return result
 end
 
 lambda {
-	condition, action, source_path, target_path = get_params.call("condition":"PartyServer.db$", "action":"copy", "source path":".", "target path":"./tmp")
-  execute_backup.call(condition, action.to_s, source_path, target_path)
+	condition, action, source_path, target_path = get_params("condition":"PartyServer.db$", "action":"copy", "source path":".", "target path":"./tmp")
+  execute_backup(condition, action.to_s, source_path, target_path)
   puts "Finished!"
   system("pause")
 }.call
