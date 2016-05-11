@@ -19,7 +19,7 @@ lambda {
       next if File.exist? target_file
       puts "Copy file #{source_file} ..."
       target_path = File.dirname(target_file)
-      FileUtils.makedirs(target_path)
+      FileUtils.makedirs(target_path) unless File.exist? target_path
       FileUtils.copy(source_file, target_file)
     end
   end
