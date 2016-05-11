@@ -17,6 +17,7 @@ lambda {
   def copy_files(source_files, target_files)
     Hash[*source_files.zip(target_files).flatten].each_pair do|source_file, target_file|
       next if File.exist? target_file
+      puts "Copy file #{source_file} ..."
       target_path = File.dirname(target_file)
       FileUtils.makedirs(target_path)
       FileUtils.copy(source_file, target_file)
@@ -24,7 +25,7 @@ lambda {
   end
 
   condition, source_path, target_path = ARGV
-  condition ||= '.db$'
+  condition ||= 'DataServer.db$'
   source_path ||= '.'
   target_path ||= './tmp'
 
@@ -32,4 +33,6 @@ lambda {
   target_files = source_files.map {|file| file.sub(source_path, target_path)}
 
   copy_files(source_files, target_files)
+  puts "Finished!"
+  system("pause")
 }.call
