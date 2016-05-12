@@ -3,14 +3,16 @@
 require 'fileutils'
 require_relative 'get_params'
 
-def traverse(path, condition, source_files, ignore_path=%w(. ..))
+def traverse(path, condition, ignore_path=%w(. ..))
+  result = []
   if File.directory?(path)
     Dir.foreach(path) do | name |
-      traverse([path, name].join('/'), condition, source_files, ignore_path) unless ignore_path.include? name
+      result.concat(traverse([path, name].join('/'), condition, ignore_path)) unless ignore_path.include? name
     end
   else
-    source_files << path if condition =~ File.basename(path)
+    result << path if condition =~ File.basename(path)
   end
+  return result
 end
 
 def use_next?(is_test, action, source_file, target_file)
@@ -39,8 +41,7 @@ def backup_files(is_test, action, source_files, target_files)
 end
 
 def execute_backup(is_test, condition, action, source_path, target_path)
-  source_files = []
-  traverse(source_path, Regexp.new(condition, Regexp::IGNORECASE), source_files, %w(. .. .git tmp))
+  source_files = traverse(source_path, Regexp.new(condition, Regexp::IGNORECASE), %w(. .. .git tmp))
   target_files = source_files.map {|file| file.sub(source_path, target_path)}
 
   backup_files(is_test, action, source_files, target_files)
