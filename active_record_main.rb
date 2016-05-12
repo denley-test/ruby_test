@@ -20,7 +20,7 @@ def execute_db(db_file)
       self.primary_key = :id
       validates_uniqueness_of :id
     end
-    model_name = table_name.sub(/^(?:dst|tbl)/, '').classify
+    model_name = table_name.classify
     eval "#{model_name} = temp"
     puts "  #{model_name}"
   end
