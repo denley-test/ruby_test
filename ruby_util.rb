@@ -24,3 +24,15 @@ def get_params(options = {})
   end
   return result
 end
+
+def traverse(path, condition, ignore_path=%w(. ..))
+  result = []
+  if File.directory?(path)
+    Dir.foreach(path) do | name |
+      result.concat(traverse([path, name].join('/'), condition, ignore_path)) unless ignore_path.include? name
+    end
+  else
+    result << path if condition =~ File.basename(path)
+  end
+  return result
+end

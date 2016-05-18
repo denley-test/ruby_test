@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 
 require 'active_record'
-require_relative 'get_params'
+require_relative 'ruby_util'
 
 def execute_db(db_file)
   # get table names from db_name
